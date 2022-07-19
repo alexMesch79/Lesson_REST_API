@@ -8,7 +8,7 @@ import static io.restassured.parsing.Parser.JSON;
 import static org.hamcrest.Matchers.is;
 
 public class ReqresInTestSimple {
-    @DisplayName("Проверка запроса GET LIST USERS и атрибута total")
+    @DisplayName("Проверка запроса GET LIST USERS, а так же атрибута total")
     @Test
     void checkListUserAttributeTotal() {
         given()
