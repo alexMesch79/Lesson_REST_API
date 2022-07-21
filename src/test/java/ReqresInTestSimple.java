@@ -1,10 +1,8 @@
-import io.restassured.response.ValidatableResponse;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.parsing.Parser.JSON;
+import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.is;
 
 public class ReqresInTestSimple {
@@ -50,6 +48,43 @@ public class ReqresInTestSimple {
                 .then()
                 .statusCode(404);
     }
+
+    @DisplayName("Проверка запроса POST CREATE и атрибутов name и job")
+    @Test
+    void checkPostCreate(){
+        String body = "{ \"name\": \"morpheus\", \"job\": \"leader\"}";
+
+        given()
+                .contentType(JSON)
+                .body(body)
+                .when()
+                .post("https://reqres.in/api/users")
+                .then()
+                .log().body()
+                .log().status()
+                .body("name", is("morpheus"))
+                .body("job", is("leader"))
+                .statusCode(201);
+    }
+
+    @DisplayName("Проверка запроса PUT UPDATE и атрибутов name и job")
+    @Test
+    void checkPutUpdate(){
+        String body = "{ \"name\": \"morpheus\", \"job\": \"zion resident\"}";
+
+        given()
+                .contentType(JSON)
+                .body(body)
+                .when()
+                .put("https://reqres.in/api/users/2")
+                .then()
+                .log().body()
+                .log().status()
+                .body("name", is("morpheus"))
+                .body("job", is("zion resident"))
+                .statusCode(200);
+    }
+
     @DisplayName("Проверка запроса GET DELAYED RESPONSE и атрибута page")
     @Test
     void checkDelayedResponse() {
